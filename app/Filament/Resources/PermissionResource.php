@@ -35,7 +35,7 @@ class PermissionResource extends Resource
                     ->minLength(2)
                     ->maxLength(255)
                     ->required()
-                    ->unique(),
+                    ->unique(ignoreRecord: true),
                 ])
             ]);
     }
@@ -51,6 +51,7 @@ class PermissionResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
