@@ -11,11 +11,12 @@ use Filament\Resources\Resource;
 use Filament\Resources\Pages\Page;
 use Filament\Forms\Components\Card;
 use Illuminate\Support\Facades\Hash;
+use Filament\Forms\Components\Select;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Resources\Pages\CreateRecord;
 use App\Filament\Resources\UserResource\Pages;
-use App\Filament\Resources\UserResource\Pages\CreateUser;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use App\Filament\Resources\UserResource\Pages\CreateUser;
 use App\Filament\Resources\UserResource\RelationManagers;
 
 class UserResource extends Resource
@@ -47,6 +48,14 @@ class UserResource extends Resource
                         ->dehydrated(fn ($state) => filled($state))
                         ->required(fn (Page $livewire) => ($livewire instanceof CreateUser))
                         ->maxLength(255),
+                    Forms\Components\Select::make('roles')
+                        ->multiple()
+                        ->relationship('roles', 'name')
+                        ->preload(),
+                    Forms\Components\Select::make('permission')
+                        ->multiple()
+                        ->relationship('permissions', 'name')
+                        ->preload(),
                 ])
             ]);
     }
